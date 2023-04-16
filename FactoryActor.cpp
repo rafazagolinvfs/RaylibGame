@@ -28,6 +28,7 @@ FactoryActor* FactoryActor::GetInstance()
 Controller* FactoryActor::SpawnController()
 {
     return new Controller();
+    
 }
 
 Actor* FactoryActor::SpawnActor(Vector2 position, Vector2 size)

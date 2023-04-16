@@ -11,12 +11,6 @@
 
 Level::Level()
 {	
-
-	
-
-
-
-
 	//Breakable things
 	Breakable* item = Singleton::GetFactoryActor()->SpawnBreakable
 	(
@@ -64,7 +58,6 @@ Level::~Level()
 		delete &entities[i];
 	}
 }
-
 
 void Level::Update()
 {

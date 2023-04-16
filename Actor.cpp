@@ -7,12 +7,14 @@ Actor::Actor()
 	shape.width = 0.f;
 	shape.height = 0.f;
 	mUID = 0;
+	movSpeed = 2.f;
 }
 
 Actor::Actor(const Actor& actor)
 {
 	mUID = actor.mUID;
 	shape = actor.shape;
+	movSpeed = 2.f;
 }
 
 Actor::Actor(Vector2 position, Vector2 size)
@@ -22,7 +24,7 @@ Actor::Actor(Vector2 position, Vector2 size)
 	shape.width = size.x; 
 	shape.height = size.y;	
 	mUID = 0;
-
+	movSpeed = 2.f;
 }
 
 Actor::~Actor()
@@ -33,12 +35,13 @@ Actor::~Actor()
 void Actor::Update()
 {
 	Render(RED);
+	
 }
 
 void Actor::Move(Vector2 dir)
 {
-	shape.x += dir.x;
-	shape.y += dir.y;
+	shape.x += dir.x * movSpeed;
+	shape.y += dir.y * movSpeed;
 }
 
 void Actor::Render(Color color)

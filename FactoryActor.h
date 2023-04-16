@@ -21,9 +21,6 @@ public:
 	static Breakable* SpawnBreakable(Vector2 position, Vector2 size);
 	static Player* SpawnPlayer(Vector2 position, Vector2 size);
 
-
-
-
 	~FactoryActor()
 	{
 		std::cout << "Destroyed factory actor" << std::endl;

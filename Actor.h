@@ -22,6 +22,8 @@ public:
 		Rectangle shape;
 	};
 
+	float movSpeed;
+
 	
 protected:
 	Actor();
