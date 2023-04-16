@@ -63,7 +63,7 @@ void Level::Update()
 {
 	for (int i = 0; i < entities.size(); ++i)
 	{
-		if (!entities[i])
+		if (!&entities[i])
 		{
 			return;
 		}

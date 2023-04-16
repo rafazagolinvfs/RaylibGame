@@ -20,7 +20,7 @@ public:
 		Rectangle shape;
 	};
 
-
+	
 protected:
 	Actor();
 	Actor(const Actor& actor); //copy constructor

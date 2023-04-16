@@ -38,7 +38,6 @@ void Actor::Move(Vector2 dir)
 {
 	shape.x += dir.x;
 	shape.y += dir.y;
-
 }
 
 void Actor::Render(Color color)
