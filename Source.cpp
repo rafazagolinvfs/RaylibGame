@@ -1,52 +1,35 @@
 #include <raylib.h>
+#include "Level.h"
 
+#define TILE_SIZE 10
+#define SCREEN_X 450   
+#define SCREEN_Y 700
 
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
 int main()
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    InitWindow(SCREEN_X, SCREEN_Y, "raylib [core] example - basic window");
 
-    InitWindow(800, 450, "raylib [core] example - basic window");
+    SetTargetFPS(60);              
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-    Rectangle rec = Rectangle();
-    rec.width = 100;
-    rec.height = 100;
+    Level* level = new Level();
 
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose())
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+        //Update world
+        if (level)
+        {
+            level->Update();
+        }
 
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawCircle(GetMousePosition().x, GetMousePosition().y, 100, RED);
-        rec.x = GetMousePosition().x;
-        rec.y = GetMousePosition().y;
-
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        EndDrawing();      
     }
-
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    CloseWindow();  
+    level->~Level();
+    delete level;
 
     return 0;
 }
