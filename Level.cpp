@@ -1,40 +1,27 @@
 #include "Level.h"
-#include "Actor.h"
+#include "Player.h"
 #include "Controller.h"
 
 #include "Singleton.h"
 #include "FactoryActor.h"
 #include "Utils.h"
 
+
+
+
 Level::Level()
 {	
-	//Player
-	Actor* player = Singleton::GetFactoryActor()->SpawnActor
-	(
-		Vector2{SCREEN_X / 2.f - (50.f / 2.f), SCREEN_Y - 100.f},
-		Vector2{ 50.f, 100.f }
-	);
 
-	if (player)
-	{
-		entities.push_back(&*player);
-	}
 	
 
-	//Controller
-	Controller* controller = Singleton::GetFactoryActor()->SpawnController();
-	if (controller)
-	{
-		entities.push_back(&*controller);
-		controller->Possess(player);
-	}
+
 
 
 	//Breakable things
 	Breakable* item = Singleton::GetFactoryActor()->SpawnBreakable
 	(
 		Vector2{ 0.f, 100.f }, 
-		Vector2{ 50.f, 100.f }
+		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)item);
 
@@ -43,9 +30,29 @@ Level::Level()
 	Obstacle* obstacle = Singleton::GetFactoryActor()->SpawnObstacle
 	(
 		Vector2{ SCREEN_X / 2.f - (50.f / 2.f), 100.f },
-		Vector2{ 50.f, 100.f }
+		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)obstacle);
+
+	//Player
+	Player* player = Singleton::GetFactoryActor()->SpawnPlayer
+	(
+		Vector2{ SCREEN_X / 2.f - (50.f / 2.f), SCREEN_Y - 100.f },
+		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
+	);
+
+	if (player)
+	{
+		entities.push_back(&*player);
+	}
+
+	//Controller
+	Controller* controller = Singleton::GetFactoryActor()->SpawnController();
+	if (controller)
+	{
+		entities.push_back(&*controller);
+		controller->Possess(player);
+	}
 
 }
 

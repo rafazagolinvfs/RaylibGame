@@ -10,10 +10,12 @@ class Actor
 public:
 	~Actor();
 
-
 	virtual void Update();
 	virtual void Move(Vector2 dir);
 	virtual void Render(Color color );
+	Vector2 GetPosition() const;
+	Texture2D sprite;
+
 
 	union
 	{

@@ -22,6 +22,7 @@ Actor::Actor(Vector2 position, Vector2 size)
 	shape.width = size.x; 
 	shape.height = size.y;	
 	mUID = 0;
+
 }
 
 Actor::~Actor()
@@ -42,5 +43,13 @@ void Actor::Move(Vector2 dir)
 
 void Actor::Render(Color color)
 {
-	DrawRectangle(shape.x, shape.y, shape.width, shape.height, color);
+#ifdef DRAW_DEBUG
+	DrawRectangleLines(shape.x, shape.y, shape.width, shape.height, color);
+#endif
+	DrawTexture(sprite, (int)GetPosition().x, (int)GetPosition().y, WHITE);
+}
+
+Vector2 Actor::GetPosition() const
+{
+	return {shape.x, shape.y};
 }

@@ -8,6 +8,7 @@ class Actor;
 class Controller;
 class Obstacle;
 class Breakable;
+class Player;
 
 class FactoryActor
 {
@@ -18,6 +19,8 @@ public:
 	static Controller* SpawnController();
 	static Obstacle* SpawnObstacle(Vector2 position, Vector2 size);
 	static Breakable* SpawnBreakable(Vector2 position, Vector2 size);
+	static Player* SpawnPlayer(Vector2 position, Vector2 size);
+
 
 
 

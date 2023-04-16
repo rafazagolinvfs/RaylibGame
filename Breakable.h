@@ -9,10 +9,9 @@ private:
 
 	Breakable(Vector2 position, Vector2 size) : Actor(position, size)
 	{
-
+		sprite = LoadTexture("resources/Breakable.png");
 	}
 
-	virtual void Update() override;
 	
 };
 

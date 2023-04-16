@@ -40,5 +40,14 @@ void Controller::Move()
 	{
 		dir.x = 1.f;
 	}
+
+	if (IsKeyDown(KEY_W))
+	{
+		dir.y = -1.f;
+	}
+	if (IsKeyDown(KEY_S))
+	{
+		dir.y = 1.f;
+	}
 	possessedPawn->Move(dir);
 }

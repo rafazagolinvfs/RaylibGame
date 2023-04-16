@@ -3,6 +3,7 @@
 #include "Controller.h"
 #include "Obstacle.h"
 #include "Breakable.h"
+#include "Player.h"
 
 #include <time.h>
 #include <stdlib.h>
@@ -42,4 +43,9 @@ Obstacle* FactoryActor::SpawnObstacle(Vector2 position, Vector2 size)
 Breakable* FactoryActor::SpawnBreakable(Vector2 position, Vector2 size)
 {
     return new Breakable(position, size);
+}
+
+Player* FactoryActor::SpawnPlayer(Vector2 position, Vector2 size)
+{
+    return new Player(position, size);
 }

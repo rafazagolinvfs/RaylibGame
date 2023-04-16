@@ -7,11 +7,8 @@ class Obstacle : public Actor
 private:
 	Obstacle(Vector2 position, Vector2 size) : Actor(position, size)
 	{
-
+		sprite = LoadTexture("resources/Obstacle_1.png");
 	}
-
-	virtual void Update() override;
-
 	
 };
 
