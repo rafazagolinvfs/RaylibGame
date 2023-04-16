@@ -4,15 +4,18 @@
 #include <vector>
 #include <string>
 
+
 class Actor;
+class Breakable;
 
 class Level
 {
 public:
+	void Update();
 	Level();
 	~Level();
-	std::vector<Actor*> entities;
 
-	void Update();
+private:
+	std::vector<Actor*> entities;
 };
 

@@ -18,14 +18,13 @@ public:
 	union
 	{
 		Rectangle shape;
-
 	};
 
-protected:
 
-private:
+protected:
 	Actor();
-	Actor(Vector2 position, Vector2 size);
+	Actor(const Actor& actor); //copy constructor
+	Actor(Vector2 position, Vector2 size); 
 	int mUID;
 
 };

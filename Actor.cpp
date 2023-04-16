@@ -9,6 +9,12 @@ Actor::Actor()
 	mUID = 0;
 }
 
+Actor::Actor(const Actor& actor)
+{
+	mUID = actor.mUID;
+	shape = actor.shape;
+}
+
 Actor::Actor(Vector2 position, Vector2 size)
 {
 	shape.x = position.x;

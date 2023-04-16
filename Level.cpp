@@ -4,12 +4,17 @@
 
 #include "Singleton.h"
 #include "FactoryActor.h"
+#include "Utils.h"
 
 Level::Level()
-{
-	
+{	
 	//Player
-	Actor* player = Singleton::GetFactoryActor()->SpawnActor(Vector2{0.f, 500.f}, Vector2{ 50.f, 100.f });
+	Actor* player = Singleton::GetFactoryActor()->SpawnActor
+	(
+		Vector2{SCREEN_X / 2.f - (50.f / 2.f), SCREEN_Y - 100.f},
+		Vector2{ 50.f, 100.f }
+	);
+
 	if (player)
 	{
 		entities.push_back(&*player);
@@ -25,9 +30,22 @@ Level::Level()
 	}
 
 
-	//Obstacles
-
 	//Breakable things
+	Breakable* item = Singleton::GetFactoryActor()->SpawnBreakable
+	(
+		Vector2{ 0.f, 100.f }, 
+		Vector2{ 50.f, 100.f }
+	);
+	entities.push_back(&*(Actor*)item);
+
+
+	//Obstacles
+	Obstacle* obstacle = Singleton::GetFactoryActor()->SpawnObstacle
+	(
+		Vector2{ SCREEN_X / 2.f - (50.f / 2.f), 100.f },
+		Vector2{ 50.f, 100.f }
+	);
+	entities.push_back(&*(Actor*)obstacle);
 
 }
 

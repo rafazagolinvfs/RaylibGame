@@ -142,17 +142,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Breakable.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="FactoryActor.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Breakable.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="FactoryActor.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>

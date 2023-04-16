@@ -13,7 +13,6 @@ public:
 	void Possess(class Actor* pawn);
 	virtual void Update() override;
 
-
 private:
 	Controller();
 	void Move();

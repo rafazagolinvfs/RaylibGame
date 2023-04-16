@@ -1,6 +1,8 @@
 #include "FactoryActor.h"
 #include "Actor.h"
 #include "Controller.h"
+#include "Obstacle.h"
+#include "Breakable.h"
 
 #include <time.h>
 #include <stdlib.h>
@@ -22,11 +24,6 @@ FactoryActor* FactoryActor::GetInstance()
     return sInstance;
 }
 
-Actor* FactoryActor::SpawnActor()
-{
-    return new Actor();
-}
-
 Controller* FactoryActor::SpawnController()
 {
     return new Controller();
@@ -37,3 +34,12 @@ Actor* FactoryActor::SpawnActor(Vector2 position, Vector2 size)
     return new Actor(position, size);
 }
 
+Obstacle* FactoryActor::SpawnObstacle(Vector2 position, Vector2 size)
+{
+    return new Obstacle(position, size);
+}
+
+Breakable* FactoryActor::SpawnBreakable(Vector2 position, Vector2 size)
+{
+    return new Breakable(position, size);
+}

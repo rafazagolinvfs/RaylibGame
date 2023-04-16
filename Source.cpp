@@ -1,13 +1,10 @@
 #include <raylib.h>
 #include "Level.h"
-
-#define TILE_SIZE 10
-#define SCREEN_X 450   
-#define SCREEN_Y 700
+#include "Utils.h"
 
 int main()
 {
-    InitWindow(SCREEN_X, SCREEN_Y, "raylib [core] example - basic window");
+    InitWindow(SCREEN_X, SCREEN_Y, WINDOW_TITLE);
 
     SetTargetFPS(60);              
 
