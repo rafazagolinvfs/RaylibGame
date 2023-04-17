@@ -3,10 +3,16 @@
 #include <raylib.h>
 #include "Actor.h"
 
+template <typename T>
+class FactoryActor;
+
 class Controller : public Actor
 {
+	template <typename T>
 	friend class FactoryActor;
 public:
+
+	
 
 	~Controller();
 
@@ -15,6 +21,10 @@ public:
 
 private:
 	Controller();
+	Controller(Vector2 position, Vector2 size) : Actor(position, size)
+	{
+
+	}
 	void Move();
 	Actor* possessedPawn;
 };

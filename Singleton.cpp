@@ -1,16 +1,31 @@
 #include "Singleton.h"
 #include "FactoryActor.h"
+#include "Utils.h"
+
+template class Singleton<Actor>;
+template class Singleton<Vector2>;
+template class Singleton<Controller>;
+template class Singleton<Player>;
+template class Singleton<Obstacle>;
+template class Singleton<Breakable>;
 
 
-Singleton* Singleton::mMainInstance = nullptr;
-FactoryActor* Singleton::mFactoryActorClass = nullptr;
+template <class T>
+Singleton<T>* Singleton<T>::mMainInstance = nullptr;
 
-Singleton::Singleton()
+template <class T>
+FactoryActor<T>* Singleton<T>::mFactoryActorClass = nullptr;
+
+
+
+template <class T>
+Singleton<T>::Singleton()
 {
 
 }
 
-Singleton* Singleton::GetInstance()
+template <class T>
+Singleton<T>* Singleton<T>::GetInstance()
 {
 	if (!mMainInstance)
 	{
@@ -19,16 +34,18 @@ Singleton* Singleton::GetInstance()
 	return mMainInstance;
 }
 
-FactoryActor* Singleton::GetFactoryActor()
+template <class T>
+FactoryActor<T>* Singleton<T>::GetFactoryActor()
 {
 	if (!mFactoryActorClass)
 	{
-		mFactoryActorClass = new FactoryActor();
+		mFactoryActorClass = new FactoryActor<T>();
 	}
 	return mFactoryActorClass;
 }
 
-void Singleton::DestroyFactoryActor()
+template <class T>
+void Singleton<T>::DestroyFactoryActor()
 {
 	if (GetFactoryActor())
 	{
