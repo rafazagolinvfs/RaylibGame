@@ -6,7 +6,7 @@ int main()
 {
     InitWindow(SCREEN_X, SCREEN_Y, WINDOW_TITLE);
 
-    SetTargetFPS(60);              
+    //SetTargetFPS(60);              
 
     Level* level = new Level();
 
@@ -21,7 +21,7 @@ int main()
         }
 
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
         EndDrawing();      
     }
     CloseWindow();  

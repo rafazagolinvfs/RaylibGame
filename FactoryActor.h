@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <raylib.h>
+#include "Utils.h"
 
 //forward declaration
 class Actor;
@@ -10,16 +11,22 @@ class Obstacle;
 class Breakable;
 class Player;
 
+template <typename T>
+class Singleton;
+
+template <class T>
 class FactoryActor
 {
+	template <typename T>
 	friend class Singleton;
+
 public:
-	static int sUniqueIDCounter;	
-	static Actor* SpawnActor(Vector2 position, Vector2 size);
-	static Controller* SpawnController();
-	static Obstacle* SpawnObstacle(Vector2 position, Vector2 size);
-	static Breakable* SpawnBreakable(Vector2 position, Vector2 size);
-	static Player* SpawnPlayer(Vector2 position, Vector2 size);
+	static int sUniqueIDCounter;
+
+
+	static T* Spawn();
+	static T* SpawnActor(Vector2 pos, Vector2 size);
+
 
 	~FactoryActor()
 	{

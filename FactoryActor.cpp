@@ -5,18 +5,27 @@
 #include "Breakable.h"
 #include "Player.h"
 
+
 #include <time.h>
 #include <stdlib.h>
 
-FactoryActor* FactoryActor::sInstance = nullptr;
-int FactoryActor::sUniqueIDCounter = 0;
 
-FactoryActor::FactoryActor()
-{
-    srand(time(NULL));
-}
+//template class FactoryActor<int>;
+template class FactoryActor<Actor>;
+template class FactoryActor<Vector2>;
+template class FactoryActor<Controller>;
+template class FactoryActor<Player>;
+template class FactoryActor<Obstacle>;
+template class FactoryActor<Breakable>;
 
-FactoryActor* FactoryActor::GetInstance()
+
+int FactoryActor<int>::sUniqueIDCounter = 0;
+
+template<class T>
+FactoryActor<T>* FactoryActor<T>::sInstance = nullptr;
+
+template <class T>
+FactoryActor<T>* FactoryActor<T>::GetInstance()
 {
     if (!sInstance)
     {
@@ -25,28 +34,21 @@ FactoryActor* FactoryActor::GetInstance()
     return sInstance;
 }
 
-Controller* FactoryActor::SpawnController()
+template <class T>
+FactoryActor<T>::FactoryActor()
 {
-    return new Controller();
-    
+    srand(time(NULL));
 }
 
-Actor* FactoryActor::SpawnActor(Vector2 position, Vector2 size)
+template <typename T>
+T* FactoryActor<T>::Spawn()
 {
-    return new Actor(position, size);
+    return new T();
 }
 
-Obstacle* FactoryActor::SpawnObstacle(Vector2 position, Vector2 size)
-{
-    return new Obstacle(position, size);
+template<class T>
+T* FactoryActor<T>::SpawnActor(Vector2 pos, Vector2 size)
+{    
+    return new T(pos, size);
 }
 
-Breakable* FactoryActor::SpawnBreakable(Vector2 position, Vector2 size)
-{
-    return new Breakable(position, size);
-}
-
-Player* FactoryActor::SpawnPlayer(Vector2 position, Vector2 size)
-{
-    return new Player(position, size);
-}
