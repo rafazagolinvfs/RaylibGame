@@ -15,6 +15,7 @@ Level::Level()
 		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)item);
+	notPlayerTEMP.push_back(&*(Actor*)item);
 
 
 	//Obstacles
@@ -24,9 +25,10 @@ Level::Level()
 		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)obstacle);
+	notPlayerTEMP.push_back(&*(Actor*)obstacle);
 
 	//Player
-	Player* player = Singleton<Player>::GetFactoryActor()->SpawnActor
+	player = Singleton<Player>::GetFactoryActor()->SpawnActor
 	(
 		Vector2{ SCREEN_X / 2.f - (50.f / 2.f), SCREEN_Y - 100.f },
 		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
@@ -35,7 +37,6 @@ Level::Level()
 	if (player)
 	{
 		entities.push_back(&*player);
-		
 	}
 
 	//Controller
@@ -68,6 +69,11 @@ void Level::Update()
 		}
 		entities[i]->Render(RED);
 		entities[i]->Update();
+
+		player->Collide([]() ->void
+			{
+				LOG("Hit");
+			}, notPlayerTEMP);
 	}
 }
 
