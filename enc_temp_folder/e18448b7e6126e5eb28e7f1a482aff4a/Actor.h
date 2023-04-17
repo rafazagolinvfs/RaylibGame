@@ -3,7 +3,7 @@
 #include "Utils.h"
 #include <raylib.h>
 
-typedef void(*CollisionAction)();
+typedef void(*CollisionAction);
 
 class Actor
 {
@@ -15,7 +15,7 @@ public:
 	virtual void Update();
 	virtual void Move(Vector2 dir);
 	virtual void Render(Color color );
-	void Collide(CollisionAction collisionAction, Rectangle objectToCollide);
+	void Collide(CollisionAction collisionAction);
 	Vector2 GetPosition() const;
 	Texture2D sprite;
 

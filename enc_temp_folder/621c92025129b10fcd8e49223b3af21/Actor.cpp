@@ -56,10 +56,7 @@ Vector2 Actor::GetPosition() const
 	return {shape.x, shape.y};
 }
 
-void Actor::Collide(CollisionAction collisionAction, Rectangle objectToCollide)
+void Actor::Collide(CollisionAction collisionAction)
 {
-	if (CheckCollisionRecs(shape, objectToCollide))
-	{
-		collisionAction();
-	}
+
 }
