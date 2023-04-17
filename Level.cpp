@@ -6,6 +6,12 @@
 #include "FactoryActor.h"
 #include "Utils.h"
 
+void CollisionBehaviour(Level &currentLevel, Actor* actor)
+{
+	currentLevel.entities.erase(std::find(currentLevel.entities.begin(), currentLevel.entities.end(), actor));
+	LOG("Hit");
+};
+
 Level::Level()
 {	
 	//Breakable things
@@ -15,7 +21,6 @@ Level::Level()
 		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)item);
-	notPlayerTEMP.push_back(&*(Actor*)item);
 
 
 	//Obstacles
@@ -25,7 +30,6 @@ Level::Level()
 		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)obstacle);
-	notPlayerTEMP.push_back(&*(Actor*)obstacle);
 
 	//Player
 	player = Singleton<Player>::GetFactoryActor()->SpawnActor
@@ -36,6 +40,7 @@ Level::Level()
 
 	if (player)
 	{
+		player->isPlayerActor = true;
 		entities.push_back(&*player);
 	}
 
@@ -46,6 +51,12 @@ Level::Level()
 	{
 		entities.push_back(&*controller);
 		controller->Possess(player);
+	}
+
+	for (auto actor : entities)
+	{
+		if (actor->isPlayerActor) continue;
+		ActorsForThePlayerActorToCollideWith.push_back(actor);
 	}
 
 }
@@ -70,11 +81,6 @@ void Level::Update()
 		entities[i]->Render(RED);
 		entities[i]->Update();
 
-		player->Collide([]() ->void
-			{
-				LOG("Hit");
-			}, notPlayerTEMP);
+		player->Collide(CollisionBehaviour, *this, ActorsForThePlayerActorToCollideWith);
 	}
-}
-
-
+};

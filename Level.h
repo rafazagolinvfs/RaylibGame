@@ -15,10 +15,10 @@ public:
 	void Update();
 	Level();
 	~Level();
+	std::vector<Actor*> entities;
 
 private:
-	std::vector<Actor*> entities;
-	std::vector<Actor*> notPlayerTEMP;
+	std::vector<Actor*> ActorsForThePlayerActorToCollideWith;
 	Player* player;
 };
 

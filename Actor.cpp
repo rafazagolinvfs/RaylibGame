@@ -7,14 +7,14 @@ Actor::Actor()
 	shape.width = 0.f;
 	shape.height = 0.f;
 	mUID = 0;
-	movSpeed = 20.f;
+	movSpeed = 200.f;
 }
 
 Actor::Actor(const Actor& actor)
 {
 	mUID = actor.mUID;
 	shape = actor.shape;
-	movSpeed = 20.f;
+	movSpeed = 200.f;
 }
 
 Actor::Actor(Vector2 position, Vector2 size)
@@ -24,7 +24,7 @@ Actor::Actor(Vector2 position, Vector2 size)
 	shape.width = size.x; 
 	shape.height = size.y;	
 	mUID = 0;
-	movSpeed = 20.f;
+	movSpeed = 200.f;
 }
 
 Actor::~Actor()
@@ -51,13 +51,13 @@ void Actor::Render(Color color)
 	DrawTexture(sprite, (int)GetPosition().x, (int)GetPosition().y, WHITE);
 }
 
-void Actor::Collide(CollisionAction collisionAction, std::vector<Actor*> actorsToCollideWith)
+void Actor::Collide(CollisionAction collisionAction, Level& currentLevel, std::vector<Actor*>& actorsToCollideWith)
 {
 	for (auto actor : actorsToCollideWith)
 	{
 		if (CheckCollisionRecs(shape, actor->shape))
 		{
-			collisionAction();
+			collisionAction(currentLevel, actor);
 		}
 	}
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utils.h"
+#include "Level.h"
 #include <raylib.h>
 #include <vector>
 
@@ -8,7 +9,7 @@
 template <typename T>
 class FactoryActor;
 
-typedef void(*CollisionAction)();
+typedef void (*CollisionAction)(Level &currentLevel, Actor* actor);
 
 class Actor
 {
@@ -23,9 +24,10 @@ public:
     virtual void Update();
     virtual void Move(Vector2 dir);
     virtual void Render(Color color);
-    void Collide(CollisionAction collisionAction, std::vector<Actor*> actorToCollideWith);
+    void Collide(CollisionAction collisionAction, Level& currentLevel, std::vector<Actor*>& actorsToCollideWith);
     Vector2 GetPosition() const;
     Texture2D sprite;
+    bool isPlayerActor = false;
 
 
     union
