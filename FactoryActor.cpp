@@ -4,6 +4,7 @@
 #include "Obstacle.h"
 #include "Breakable.h"
 #include "Player.h"
+#include "Scenario.h"
 
 
 #include <time.h>
@@ -17,6 +18,7 @@ template class FactoryActor<Controller>;
 template class FactoryActor<Player>;
 template class FactoryActor<Obstacle>;
 template class FactoryActor<Breakable>;
+template class FactoryActor<Scenario>;
 
 
 int FactoryActor<int>::sUniqueIDCounter = 0;
