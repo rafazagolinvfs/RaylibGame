@@ -16,7 +16,7 @@ UserInterface::UserInterface()
 
 UserInterface::~UserInterface()
 {
-
+	
 };
 
 void UserInterface::IncreaseScore()
