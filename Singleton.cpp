@@ -8,6 +8,8 @@ template class Singleton<Controller>;
 template class Singleton<Player>;
 template class Singleton<Obstacle>;
 template class Singleton<Breakable>;
+template class Singleton<Scenario>;
+
 
 
 template <class T>

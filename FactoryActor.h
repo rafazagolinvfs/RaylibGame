@@ -10,6 +10,7 @@ class Controller;
 class Obstacle;
 class Breakable;
 class Player;
+class Scenario;
 
 template <typename T>
 class Singleton;

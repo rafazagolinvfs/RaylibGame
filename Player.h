@@ -13,7 +13,7 @@ private:
 	Player(Vector2 position, Vector2 size) : Actor(position, size)
 	{
 		sprite = LoadTexture("resources/Ralph.png");
-		movSpeed = 100.f;
+		movSpeed = 250.f;
 	}	
 	Player()
 	{

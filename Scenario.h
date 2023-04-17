@@ -7,23 +7,23 @@ class FactoryActor;
 
 class Actor;
 
-class Obstacle : public Actor
+class Scenario : public Actor
 {
 	template<typename T>
 	friend class FactoryActor;
 
 private:
-	Obstacle(Vector2 position, Vector2 size) : Actor(position, size)
+	Scenario(Vector2 position, Vector2 size) : Actor(position, size)
 	{
-		sprite = LoadTexture("resources/Obstacle.png");
-		movSpeed = MOV_SPEED;
+		sprite = LoadTexture("resources/EnvironmentBase1.png");
+		
 	}
-	Obstacle()
+	Scenario()
 	{
 
 	}
 
 	virtual void Update() override;
-	
+
 };
 
