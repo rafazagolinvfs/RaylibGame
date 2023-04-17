@@ -11,5 +11,5 @@ void Scenario::Update()
 	{
 		shape.y = -SCREEN_Y;
 	}
-	LOG(shape.y);
+
 }

@@ -1,5 +1,7 @@
 #include "Singleton.h"
 #include "FactoryActor.h"
+
+
 #include "Utils.h"
 
 template class Singleton<Actor>;
@@ -45,6 +47,7 @@ FactoryActor<T>* Singleton<T>::GetFactoryActor()
 	}
 	return mFactoryActorClass;
 }
+
 
 template <class T>
 void Singleton<T>::DestroyFactoryActor()

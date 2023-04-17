@@ -14,13 +14,12 @@ private:
 	{
 		sprite = LoadTexture("resources/Ralph.png");
 		movSpeed = 250.f;
+		collisionOverlapBind = &Actor::OnOverlap;// binding the delegate
 	}	
-	Player()
-	{
-
-	}
+	Player() {}
 	
 	virtual void Move(Vector2 dir) override;
+	virtual void OnOverlap(Actor* collidedActor) override;
 
 };
 

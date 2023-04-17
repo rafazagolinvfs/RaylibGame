@@ -1,16 +1,29 @@
 #include "Player.h"
+#include "Obstacle.h"
+#include "Breakable.h"
+
+
 
 void Player::Move(Vector2 dir)
 {
 	//Screen boundaries
-	/*if (GetPosition().x + dir.x > 0 && GetPosition().x + dir.x + shape.width < SCREEN_X)
-	{
-		shape.x += dir.x * movSpeed * GetFrameTime();
-	}*/
-
-	if (GetPosition().x + dir.x > 25.f && GetPosition().x + dir.x + shape.width < SCREEN_X - 25.f)
+	const float offset = 25.f;
+	if (GetPosition().x + dir.x > 25.f && GetPosition().x + dir.x + shape.width < SCREEN_X - offset)
 	{
 		shape.x += dir.x * movSpeed * GetFrameTime();
 	}
+	
+}
 
+void Player::OnOverlap(Actor* collidedActor)
+{
+	if (!collidedActor)
+		return;
+
+	collidedActor->shape.y = 0;
+	//if (Breakable* br = dynamic_cast<Breakable*>(collidedActor))
+	//{
+	//	LOG("Overlapping");
+	//	br->shape.y = 0;
+	//}
 }

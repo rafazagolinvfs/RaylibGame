@@ -7,14 +7,14 @@ Actor::Actor()
 	shape.width = 0.f;
 	shape.height = 0.f;
 	mUID = 0;
-	movSpeed = 200.f;
+	movSpeed = 200.f;		
 }
 
 Actor::Actor(const Actor& actor)
 {
 	mUID = actor.mUID;
 	shape = actor.shape;
-	movSpeed = 200.f;
+	movSpeed = 200.f;	
 }
 
 Actor::Actor(Vector2 position, Vector2 size)
@@ -24,7 +24,7 @@ Actor::Actor(Vector2 position, Vector2 size)
 	shape.width = size.x; 
 	shape.height = size.y;	
 	mUID = 0;
-	movSpeed = 200.f;
+	movSpeed = 200.f;	
 }
 
 Actor::~Actor()
@@ -35,6 +35,7 @@ Actor::~Actor()
 void Actor::Update()
 {
 	Render(RED);
+	CollisionCheck();
 }
 
 void Actor::Move(Vector2 dir)
@@ -65,4 +66,26 @@ void Actor::Collide(CollisionAction collisionAction, Level& currentLevel, std::v
 Vector2 Actor::GetPosition() const
 {
 	return {shape.x, shape.y};
+}
+
+void Actor::CollisionCheck()
+{
+	//Check if func ptr is invalid, so we don't execute the code (in other words, if it was bound to some other function)
+	if (!collisionOverlapBind)
+	{
+		return;
+	}
+	if (level)
+	{
+		for (auto item : level->entities)
+		{
+			if (item != this)
+			{
+				if (CheckCollisionRecs(this->shape, item->shape))
+				{
+					(this->*collisionOverlapBind)(item);
+				}
+			}
+		}
+	}
 }

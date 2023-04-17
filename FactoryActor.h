@@ -28,10 +28,7 @@ public:
 	static T* SpawnActor(Vector2 pos, Vector2 size);
 
 
-	~FactoryActor()
-	{
-		std::cout << "Destroyed factory actor" << std::endl;
-	}
+	~FactoryActor();
 private:
 	FactoryActor();
 	static FactoryActor* GetInstance();

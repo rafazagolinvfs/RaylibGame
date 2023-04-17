@@ -11,7 +11,6 @@
 #include <stdlib.h>
 
 
-//template class FactoryActor<int>;
 template class FactoryActor<Actor>;
 template class FactoryActor<Vector2>;
 template class FactoryActor<Controller>;
@@ -19,7 +18,6 @@ template class FactoryActor<Player>;
 template class FactoryActor<Obstacle>;
 template class FactoryActor<Breakable>;
 template class FactoryActor<Scenario>;
-
 
 int FactoryActor<int>::sUniqueIDCounter = 0;
 
@@ -34,6 +32,12 @@ FactoryActor<T>* FactoryActor<T>::GetInstance()
         sInstance = new FactoryActor();
     }
     return sInstance;
+}
+
+template <class T>
+FactoryActor<T>::~FactoryActor()
+{
+    std::cout << "Destroyed factory actor" << std::endl;
 }
 
 template <class T>

@@ -3,6 +3,8 @@
 #include <string>
 #include "FactoryActor.h"
 
+class Level;
+
 
 template <class T>
 class Singleton
@@ -16,7 +18,7 @@ private:
 	Singleton();
 
 	static Singleton* mMainInstance;
-	static FactoryActor<T>* mFactoryActorClass;
+	static FactoryActor<T>* mFactoryActorClass;	
 };
 
 

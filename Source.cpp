@@ -5,9 +5,7 @@
 int main()
 {
     InitWindow(SCREEN_X, SCREEN_Y, WINDOW_TITLE);
-
-    //SetTargetFPS(60);              
-
+    
     Level* level = new Level();
 
 
