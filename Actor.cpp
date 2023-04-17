@@ -1,5 +1,4 @@
 #include "Actor.h"
-#include <vector>
 
 Actor::Actor()
 {
@@ -52,11 +51,6 @@ void Actor::Render(Color color)
 	DrawTexture(sprite, (int)GetPosition().x, (int)GetPosition().y, WHITE);
 }
 
-Vector2 Actor::GetPosition() const
-{
-	return {shape.x, shape.y};
-}
-
 void Actor::Collide(CollisionAction collisionAction, std::vector<Actor> actorsToCollideWith)
 {
 	for (auto actor : actorsToCollideWith)
@@ -66,4 +60,9 @@ void Actor::Collide(CollisionAction collisionAction, std::vector<Actor> actorsTo
 			collisionAction();
 		}
 	}
+};
+
+Vector2 Actor::GetPosition() const
+{
+	return {shape.x, shape.y};
 }
