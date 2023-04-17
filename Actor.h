@@ -23,7 +23,7 @@ public:
     virtual void Update();
     virtual void Move(Vector2 dir);
     virtual void Render(Color color);
-    void Collide(CollisionAction collisionAction, std::vector<Actor> actorToCollideWith);
+    void Collide(CollisionAction collisionAction, std::vector<Actor*> actorToCollideWith);
     Vector2 GetPosition() const;
     Texture2D sprite;
 
