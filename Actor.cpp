@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include <vector>
 
 Actor::Actor()
 {
@@ -56,10 +57,13 @@ Vector2 Actor::GetPosition() const
 	return {shape.x, shape.y};
 }
 
-void Actor::Collide(CollisionAction collisionAction, Rectangle objectToCollide)
+void Actor::Collide(CollisionAction collisionAction, std::vector<Actor> actorsToCollideWith)
 {
-	if (CheckCollisionRecs(shape, objectToCollide))
+	for (auto actor : actorsToCollideWith)
 	{
-		collisionAction();
+		if (CheckCollisionRecs(shape, actor.shape))
+		{
+			collisionAction();
+		}
 	}
 }
