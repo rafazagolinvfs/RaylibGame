@@ -12,6 +12,7 @@ public:
 	~UserInterface();
 
 	void IncreaseScore();
+	void DecreaseScore();
 	void OutputScore();
 
 private:

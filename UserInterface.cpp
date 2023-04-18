@@ -25,6 +25,12 @@ void UserInterface::IncreaseScore()
 	ouputText = std::format("Score: {}\n", score);
 };
 
+void UserInterface::DecreaseScore()
+{
+	score -= scoreIterationAmount;
+	ouputText = std::format("Score: {}\n", score);
+};
+
 void UserInterface::OutputScore()
 {
 	DrawText(ouputText.c_str(), textPositionX, textPositionY, textSize, textColor);

@@ -49,5 +49,7 @@ void Controller::Move()
 	{
 		dir.y = 1.f;
 	}
+
+	isSmashing = IsKeyDown(KEY_E);
 	possessedPawn->Move(dir);
 }

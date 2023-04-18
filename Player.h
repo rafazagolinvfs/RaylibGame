@@ -24,6 +24,5 @@ private:
 	
 	virtual void Move(Vector2 dir) override;
 	virtual void OnOverlap(Actor* collidedActor) override;
-
 };
 

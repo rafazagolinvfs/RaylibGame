@@ -35,6 +35,7 @@ public:
     Vector2 GetPosition() const;
     Texture2D sprite;
     bool IgnoreCollision = false;
+    bool isSmashing = false;
 
     union
     {
