@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include "Level.h"
 #include "Utils.h"
+#include "UserInterface.h"
 
 int main()
 {

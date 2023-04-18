@@ -52,17 +52,6 @@ void Actor::Render(Color color)
 	DrawTexture(sprite, (int)GetPosition().x, (int)GetPosition().y, WHITE);
 }
 
-void Actor::Collide(CollisionAction collisionAction, Level& currentLevel, std::vector<Actor*>& actorsToCollideWith)
-{
-	for (auto actor : actorsToCollideWith)
-	{
-		if (CheckCollisionRecs(shape, actor->shape))
-		{
-			collisionAction(currentLevel, actor);
-		}
-	}
-};
-
 Vector2 Actor::GetPosition() const
 {
 	return {shape.x, shape.y};
@@ -75,13 +64,14 @@ void Actor::CollisionCheck()
 	{
 		return;
 	}
+
 	if (level)
 	{
 		for (auto item : level->entities)
 		{
 			if (item != this)
 			{
-				if (CheckCollisionRecs(this->shape, item->shape))
+				if (CheckCollisionRecs(this->shape, item->shape) && !IgnoreCollision && !item->IgnoreCollision)
 				{
 					(this->*collisionOverlapBind)(item);
 				}

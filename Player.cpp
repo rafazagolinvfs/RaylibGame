@@ -21,6 +21,8 @@ void Player::OnOverlap(Actor* collidedActor)
 		return;
 
 	collidedActor->shape.y = 0;
+	ui->IncreaseScore();
+
 	//if (Breakable* br = dynamic_cast<Breakable*>(collidedActor))
 	//{
 	//	LOG("Overlapping");

@@ -18,6 +18,7 @@ Level::Level()
 		Vector2{ SCREEN_X / 2.f - (390.f / 2.f), 0.f },
 		Vector2{ 390.f, SCREEN_Y }
 	);
+	scenario->IgnoreCollision = true;
 	entities.push_back(&*(Actor*)scenario);
 
 	//scenario2
@@ -26,6 +27,7 @@ Level::Level()
 		Vector2{ SCREEN_X / 2.f - (390.f / 2.f), -SCREEN_Y },
 		Vector2{ 390.f, SCREEN_Y }
 	);
+	scenario1->IgnoreCollision = true;
 	entities.push_back(&*(Actor*)scenario1);
 
 
@@ -56,7 +58,6 @@ Level::Level()
 	if (player)
 	{		
 		player->level = this;
-		player->isPlayerActor = true;
 		entities.push_back(&*player);
 	}
 
@@ -68,12 +69,8 @@ Level::Level()
 		controller->Possess(player);
 	}
 
-	for (auto actor : entities)
-	{
-		if (actor->isPlayerActor) continue;
-		ActorsForThePlayerActorToCollideWith.push_back(actor);
-	}
-
+	ui = new UserInterface();
+	player->ui = ui;
 }
 
 Level::~Level()
@@ -94,14 +91,7 @@ void Level::Update()
 		
 		entities[i]->Render(RED);
 		entities[i]->Update();
-
-		//player->Collide(CollisionBehaviour, *this, ActorsForThePlayerActorToCollideWith);
 	}
-};
 
-
-void CollisionBehaviour(Level& currentLevel, Actor* actor)
-{
-	currentLevel.entities.erase(std::find(currentLevel.entities.begin(), currentLevel.entities.end(), actor));
-	LOG("Hit");
+	ui->OutputScore();
 };

@@ -29,13 +29,13 @@ public:
     virtual void Update();
     virtual void Move(Vector2 dir);
     virtual void Render(Color color);
-    void Collide(CollisionAction collisionAction, Level& currentLevel, std::vector<Actor*>& actorsToCollideWith);
     virtual void OnOverlap(Actor* collidedActor) {};
 
 
     Vector2 GetPosition() const;
     Texture2D sprite;
-    bool isPlayerActor = false;
+    bool IgnoreCollision = false;
+
     union
     {
         Rectangle shape;

@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <vector>
 #include <string>
+#include "UserInterface.h"
 
 
 class Actor;
@@ -20,5 +21,7 @@ public:
 private:
 	std::vector<Actor*> ActorsForThePlayerActorToCollideWith;
 	Player* player;
+	UserInterface* ui;
+
 };
 
