@@ -12,7 +12,7 @@ class Player : public Actor
 	friend class FactoryActor;
 
 public:
-	UserInterface* ui;
+	
 private:
 	Player(Vector2 position, Vector2 size) : Actor(position, size)
 	{

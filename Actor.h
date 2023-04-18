@@ -43,6 +43,7 @@ public:
 
     float movSpeed;
     Level* level;
+    UserInterface* ui;
 
 protected:
     Actor();
