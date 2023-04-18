@@ -18,6 +18,7 @@ void Controller::Possess(Actor* pawn)
 void Controller::Update()
 {
 	Move();
+	Smash();
 }
 
 void Controller::Move()
@@ -50,6 +51,13 @@ void Controller::Move()
 		dir.y = 1.f;
 	}
 
-	isSmashing = IsKeyDown(KEY_E);
 	possessedPawn->Move(dir);
-}
+};
+
+void Controller::Smash()
+{
+	if (!possessedPawn)
+		return;
+	bool pressedButton = IsKeyDown(KEY_E);
+	possessedPawn->Smash(pressedButton);
+};

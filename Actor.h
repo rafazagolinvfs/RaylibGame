@@ -28,6 +28,7 @@ public:
 
     virtual void Update();
     virtual void Move(Vector2 dir);
+    virtual bool Smash(bool isSmashing);
     virtual void Render(Color color);
     virtual void OnOverlap(Actor* collidedActor) {};
 

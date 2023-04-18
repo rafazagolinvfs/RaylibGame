@@ -26,6 +26,7 @@ private:
 
 	}
 	void Move();
+	void Smash();
 	Actor* possessedPawn;
 };
 

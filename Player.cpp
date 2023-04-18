@@ -12,7 +12,6 @@ void Player::Move(Vector2 dir)
 	{
 		shape.x += dir.x * movSpeed * GetFrameTime();
 	}
-	
 }
 
 void Player::OnOverlap(Actor* collidedActor)
@@ -20,12 +19,19 @@ void Player::OnOverlap(Actor* collidedActor)
 	if (!collidedActor)
 		return;
 
+	if (Breakable* br = dynamic_cast<Breakable*>(collidedActor))
+	{
+		if (isSmashing)
+		{
+			br->shape.y = 0;
+			ui->IncreaseScore();
+		}
+
+		return;
+	}
+
 	collidedActor->shape.y = 0;
 	ui->DecreaseScore();
 
-	if (Breakable* br = dynamic_cast<Breakable*>(collidedActor))
-	{
-		br->shape.y = 0;
-		LOG(isSmashing);
-	}
+	
 }

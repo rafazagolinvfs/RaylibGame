@@ -44,6 +44,12 @@ void Actor::Move(Vector2 dir)
 	shape.y += dir.y * movSpeed * GetFrameTime();
 }
 
+bool Actor::Smash(bool isSmashed)
+{
+	isSmashing = isSmashed;
+	return isSmashing;
+};
+
 void Actor::Render(Color color)
 {
 #ifdef DRAW_DEBUG
