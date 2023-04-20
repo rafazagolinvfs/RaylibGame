@@ -31,7 +31,7 @@ void Player::OnOverlap(Actor* collidedActor)
 	}
 
 	collidedActor->shape.y = 0;
-	ui->DecreaseHealth();
+	ui->DecreaseScore();
 
 	
 }

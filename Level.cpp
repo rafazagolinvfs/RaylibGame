@@ -21,7 +21,7 @@ Level::Level()
 	scenario->IgnoreCollision = true;
 	entities.push_back(&*(Actor*)scenario);
 
-	//scenario2
+	//Scenario2 for parallax
 	Scenario* scenario1 = Singleton<Scenario>::GetFactoryActor()->SpawnActor
 	(
 		Vector2{ SCREEN_X / 2.f - (390.f / 2.f), -SCREEN_Y },
@@ -34,11 +34,10 @@ Level::Level()
 	//Breakable things
 	Breakable* item = Singleton<Breakable>::GetFactoryActor()->SpawnActor
 	(
-		Vector2{ 0.f, 100.f },
+		Vector2{ 75.f, 100.f },
 		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)item);
-
 
 	//Obstacles
 	Obstacle* obstacle = Singleton<Obstacle>::GetFactoryActor()->SpawnActor
