@@ -52,7 +52,7 @@ bool Actor::Smash(bool isSmashed)
 
 void Actor::Render(Color color)
 {
-#ifdef DRAW_DEBUG
+#if DRAW_DEBUG == 0
 	DrawRectangleLines(shape.x, shape.y, shape.width, shape.height, color);
 #endif
 	DrawTexture(sprite, (int)GetPosition().x, (int)GetPosition().y, WHITE);

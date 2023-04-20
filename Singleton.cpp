@@ -12,15 +12,11 @@ template class Singleton<Obstacle>;
 template class Singleton<Breakable>;
 template class Singleton<Scenario>;
 
-
-
 template <class T>
 Singleton<T>* Singleton<T>::mMainInstance = nullptr;
 
 template <class T>
 FactoryActor<T>* Singleton<T>::mFactoryActorClass = nullptr;
-
-
 
 template <class T>
 Singleton<T>::Singleton()

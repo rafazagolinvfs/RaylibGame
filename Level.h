@@ -9,6 +9,7 @@
 class Actor;
 class Breakable;
 class Player;
+class Controller;
 
 class Level
 {
@@ -22,6 +23,6 @@ private:
 	std::vector<Actor*> ActorsForThePlayerActorToCollideWith;
 	Player* player;
 	UserInterface* ui;
-
+	Controller* controller;
 };
 

@@ -9,7 +9,6 @@ int main()
     
     Level* level = new Level();
 
-
     // Main game loop
     while (!WindowShouldClose())
     {

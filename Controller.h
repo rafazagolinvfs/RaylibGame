@@ -6,25 +6,21 @@
 template <typename T>
 class FactoryActor;
 
+class UserInterface;
+
 class Controller : public Actor
 {
 	template <typename T>
 	friend class FactoryActor;
 public:
-
-	
-
 	~Controller();
-
 	void Possess(class Actor* pawn);
 	virtual void Update() override;
 
+	UserInterface* ui;
 private:
 	Controller();
-	Controller(Vector2 position, Vector2 size) : Actor(position, size)
-	{
-
-	}
+	Controller(Vector2 position, Vector2 size) : Actor(position, size){}	
 	void Move();
 	void Smash();
 	Actor* possessedPawn;

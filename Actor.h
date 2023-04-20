@@ -1,18 +1,14 @@
 #pragma once
 
+#include "EngineUtils.h"
 #include "Utils.h"
 #include "Level.h"
-#include <raylib.h>
-#include <vector>
+
 
 
 //forward declare class template
 template <typename T>
 class FactoryActor;
-
-typedef void (*CollisionAction)(Level &currentLevel, Actor* actor);
-//typedef void (*Collision)(Actor* actor);
-
 
 class Actor
 {
@@ -23,6 +19,7 @@ class Actor
     friend class FactoryActor;
 
 public:
+    //This is a function pointer that will allow us to bind it to the OnOverlap method when the actor overlaps with some actor
     using OverlapDelegate = void(Actor::*)(Actor*);
     OverlapDelegate collisionOverlapBind;
 
@@ -31,8 +28,6 @@ public:
     virtual bool Smash(bool isSmashing);
     virtual void Render(Color color);
     virtual void OnOverlap(Actor* collidedActor) {};
-
-
     Vector2 GetPosition() const;
     Texture2D sprite;
     bool IgnoreCollision = false;
@@ -48,10 +43,10 @@ public:
     UserInterface* ui;
 
 protected:
-    Actor();
-    ~Actor();
+    Actor(); //default constructor
+    ~Actor(); //default destructor
     Actor(const Actor& actor); //copy constructor
-    Actor(Vector2 position, Vector2 size);
+    Actor(Vector2 position, Vector2 size); //custom constructor
     int mUID;
 
 private: 

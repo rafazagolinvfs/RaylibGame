@@ -9,7 +9,7 @@
 #include "Utils.h"
 
 Level::Level()
-{	
+{
 	/*------------------- LOADING EVERYTHING -------------------*/
 
 	//Scenario
@@ -34,7 +34,7 @@ Level::Level()
 	//Breakable things
 	Breakable* item = Singleton<Breakable>::GetFactoryActor()->SpawnActor
 	(
-		Vector2{ 0.f, 100.f }, 
+		Vector2{ 0.f, 100.f },
 		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
 	);
 	entities.push_back(&*(Actor*)item);
@@ -56,21 +56,23 @@ Level::Level()
 	);
 
 	if (player)
-	{		
+	{
 		player->level = this;
 		entities.push_back(&*player);
+
+		//Player User interface
+		ui = new UserInterface();
+		player->ui = ui;
 	}
 
 	//Controller
-	Controller* controller = Singleton<Controller>::GetFactoryActor()->Spawn();
+	controller = Singleton<Controller>::GetFactoryActor()->Spawn();
 	if (controller)
 	{
 		entities.push_back(&*controller);
 		controller->Possess(player);
+		controller->ui = ui;
 	}
-
-	ui = new UserInterface();
-	player->ui = ui;
 }
 
 Level::~Level()
@@ -78,20 +80,50 @@ Level::~Level()
 	//Clean memory
 	for (int i = 0; i < entities.size(); ++i)
 	{
-		delete &entities[i];
+		delete& entities[i];
 	}
 }
 
 void Level::Update()
 {
-	for (int i = 0; i < entities.size(); ++i)
+	controller->Update();
+	switch (ui->GetCurrentScreen())
 	{
-		if (!&entities[i] || !entities[i])
-			return;
-		
-		entities[i]->Render(RED);
-		entities[i]->Update();
+		case EScreen::Menu: {
+			//TODO: Render menu screen, process input
+			if (ui)
+			{
+				DrawTexture(ui->menuScreen, SCREEN_X / 2 - ui->menuScreen.width /2, 0, WHITE);
+			}
+
+		}
+			break;
+
+		case EScreen::Game: {
+			//Tell every registered entity to update and render itself
+			for (int i = 0; i < entities.size(); ++i)
+			{
+				if (!&entities[i] || !entities[i])
+					return;
+
+				entities[i]->Render(RED);
+				entities[i]->Update();
+
+			}
+			ui->OutputScore();
+		}
+			break;
+
+		case EScreen::GameOver: {
+			//TODO: Render game over screen, process input
+			if (ui)
+			{
+				DrawTexture(ui->gameOverScreen, 0, 0, WHITE);
+			}
+		}
+			break;
 	}
 
-	ui->OutputScore();
+
+
 };

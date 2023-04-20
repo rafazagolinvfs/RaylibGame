@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include "UserInterface.h"
 
 Controller::Controller()
 {
@@ -17,8 +18,25 @@ void Controller::Possess(Actor* pawn)
 
 void Controller::Update()
 {
+	Actor::Update();
 	Move();
 	Smash();
+
+	//Cycle between screens
+	if (!ui)
+		return;
+
+	//When the user pressess enter, change the screen
+	if (!IsKeyDown(KEY_ENTER))
+		return;
+
+	switch (ui->GetCurrentScreen()) {
+	case EScreen::Menu:ui->SetScreen(EScreen::Game);
+		break;
+	case EScreen::GameOver: ui->SetScreen(EScreen::Menu);
+		break;
+	}
+
 }
 
 void Controller::Move()

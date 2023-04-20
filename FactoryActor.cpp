@@ -7,9 +7,6 @@
 #include "Scenario.h"
 
 
-#include <time.h>
-#include <stdlib.h>
-
 
 template class FactoryActor<Actor>;
 template class FactoryActor<Vector2>;
