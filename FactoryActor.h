@@ -31,6 +31,6 @@ public:
 	~FactoryActor();
 private:
 	FactoryActor();
-	static FactoryActor* GetInstance();
-	static FactoryActor* sInstance;
+	//static FactoryActor* GetInstance();
+	//static FactoryActor* sInstance;
 };

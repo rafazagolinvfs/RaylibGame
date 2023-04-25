@@ -44,15 +44,15 @@ void Actor::Move(Vector2 dir)
 	shape.y += dir.y * movSpeed * GetFrameTime();
 }
 
-bool Actor::Smash(bool isSmashed)
+bool Actor::Smash(bool isSmashing)
 {
-	isSmashing = isSmashed;
+	this->isSmashing = isSmashing;
 	return isSmashing;
 };
 
 void Actor::Render(Color color)
 {
-#if DRAW_DEBUG == 0
+#if DRAW_DEBUG == 1
 	DrawRectangleLines(shape.x, shape.y, shape.width, shape.height, color);
 #endif
 	DrawTexture(sprite, (int)GetPosition().x, (int)GetPosition().y, WHITE);
@@ -65,7 +65,7 @@ Vector2 Actor::GetPosition() const
 
 void Actor::CollisionCheck()
 {
-	//Check if func ptr is invalid, so we don't execute the code (in other words, if it was bound to some other function)
+	//Check if func ptr is invalid, so we don't execute the code (in other words, if it is not bound to some other function)
 	if (!collisionOverlapBind)
 	{
 		return;
@@ -73,7 +73,7 @@ void Actor::CollisionCheck()
 
 	if (level)
 	{
-		for (auto item : level->entities)
+		for (auto item : level->GetEntities())
 		{
 			if (item != this)
 			{
@@ -83,5 +83,13 @@ void Actor::CollisionCheck()
 				}
 			}
 		}
+	}
+}
+
+void Actor::ResetPosition(float resetPosition)
+{
+	if (GetPosition().y >= SCREEN_Y)
+	{
+		shape.y = resetPosition;
 	}
 }

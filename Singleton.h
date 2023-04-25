@@ -4,6 +4,9 @@
 
 class Level;
 
+template <typename T>
+class FactoryActor;
+
 
 template <class T>
 class Singleton
@@ -18,6 +21,7 @@ private:
 
 	static Singleton* mMainInstance;
 	static FactoryActor<T>* mFactoryActorClass;	
+
 };
 
 

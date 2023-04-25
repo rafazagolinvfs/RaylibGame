@@ -5,7 +5,6 @@
 #include "Level.h"
 
 
-
 //forward declare class template
 template <typename T>
 class FactoryActor;
@@ -23,6 +22,7 @@ public:
     using OverlapDelegate = void(Actor::*)(Actor*);
     OverlapDelegate collisionOverlapBind;
 
+    
     virtual void Update();
     virtual void Move(Vector2 dir);
     virtual bool Smash(bool isSmashing);
@@ -48,6 +48,8 @@ protected:
     Actor(const Actor& actor); //copy constructor
     Actor(Vector2 position, Vector2 size); //custom constructor
     int mUID;
+
+    void ResetPosition(float resetPosition = -SCREEN_Y);
 
 private: 
     void CollisionCheck();

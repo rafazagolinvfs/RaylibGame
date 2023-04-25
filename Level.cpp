@@ -3,14 +3,17 @@
 #include "Controller.h"
 #include "Scenario.h"
 #include "Obstacle.h"
+#include "UserInterface.h"
 
 #include "Singleton.h"
 #include "FactoryActor.h"
+#include "ItemsManager.h"
 #include "Utils.h"
 
 Level::Level()
 {
 	/*------------------- LOADING EVERYTHING -------------------*/
+
 
 	//Scenario
 	Scenario* scenario = Singleton<Scenario>::GetFactoryActor()->SpawnActor
@@ -30,22 +33,40 @@ Level::Level()
 	scenario1->IgnoreCollision = true;
 	entities.push_back(&*(Actor*)scenario1);
 
+	//Assigning scenario for items manager class 
+	ItemsManager* itemsManager = new ItemsManager();
+	itemsManager->initialPosX = scenario->GetPosition().x;
+	itemsManager->RegisterPositions();
 
+	
 	//Breakable things
-	Breakable* item = Singleton<Breakable>::GetFactoryActor()->SpawnActor
-	(
-		Vector2{ 75.f, 100.f },
-		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
-	);
-	entities.push_back(&*(Actor*)item);
+	//Breakable* item = Singleton<Breakable>::GetFactoryActor()->SpawnActor
+	//(
+	//	Vector2{ 75.f, 100.f },
+	//	Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
+	//);
+	//entities.push_back(&*(Actor*)item);
 
-	//Obstacles
-	Obstacle* obstacle = Singleton<Obstacle>::GetFactoryActor()->SpawnActor
-	(
-		Vector2{ SCREEN_X / 2.f - (50.f / 2.f), 100.f },
-		Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
-	);
-	entities.push_back(&*(Actor*)obstacle);
+
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		//let's start placing the enemy from the left side of the building 		
+		const float posX = itemsManager->columnPosition[i].first.x;
+		const float posY = itemsManager->columnPosition[i].first.y;
+		itemsManager->columnPosition[i].second = true;//flag that spot as occupied
+
+		Obstacle* obstacle = Singleton<Obstacle>::GetFactoryActor()->SpawnActor	
+		(
+			Vector2{ posX , posY },
+			Vector2{ ACTOR_SIZE_X, ACTOR_SIZE_Y }
+		);
+		enemies[i] = obstacle;
+	}
+	//Registering entities in level master update!
+	for (const auto& itr : enemies)
+	{
+		entities.push_back(&*(Actor*)itr);
+	}	
 
 	//Player
 	Player* player = Singleton<Player>::GetFactoryActor()->SpawnActor
@@ -94,7 +115,6 @@ void Level::Update()
 			{
 				DrawTexture(ui->menuScreen, SCREEN_X / 2 - ui->menuScreen.width /2, 0, WHITE);
 			}
-
 		}
 			break;
 

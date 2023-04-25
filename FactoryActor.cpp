@@ -6,8 +6,6 @@
 #include "Player.h"
 #include "Scenario.h"
 
-
-
 template class FactoryActor<Actor>;
 template class FactoryActor<Vector2>;
 template class FactoryActor<Controller>;
@@ -17,19 +15,6 @@ template class FactoryActor<Breakable>;
 template class FactoryActor<Scenario>;
 
 int FactoryActor<int>::sUniqueIDCounter = 0;
-
-template<class T>
-FactoryActor<T>* FactoryActor<T>::sInstance = nullptr;
-
-template <class T>
-FactoryActor<T>* FactoryActor<T>::GetInstance()
-{
-    if (!sInstance)
-    {
-        sInstance = new FactoryActor();
-    }
-    return sInstance;
-}
 
 template <class T>
 FactoryActor<T>::~FactoryActor()
