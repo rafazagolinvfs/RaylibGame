@@ -11,6 +11,7 @@ void Player::Move(Vector2 dir)
 	if (GetPosition().x + dir.x > 25.f && GetPosition().x + dir.x + shape.width < SCREEN_X - offset)
 	{
 		shape.x += dir.x * movSpeed * GetFrameTime();
+		
 	}
 }
 
@@ -18,6 +19,8 @@ void Player::OnOverlap(Actor* collidedActor)
 {
 	if (!collidedActor)
 		return;
+
+	return;
 
 	if (Breakable* br = dynamic_cast<Breakable*>(collidedActor))
 	{
@@ -35,3 +38,5 @@ void Player::OnOverlap(Actor* collidedActor)
 
 	
 }
+
+

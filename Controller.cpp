@@ -1,9 +1,11 @@
 #include "Controller.h"
 #include "UserInterface.h"
+#include "ItemsManager.h"
 
 Controller::Controller()
 {
 	possessedPawn = nullptr;
+	desiredGridPosX = 2; //center character at begin play
 	LOG("spawned controller");
 }
 
@@ -19,7 +21,8 @@ void Controller::Possess(Actor* pawn)
 void Controller::Update()
 {
 	Actor::Update();
-	Move();
+	//Move();
+	GridMovement();
 	Smash();
 
 	//Cycle between screens
@@ -76,6 +79,50 @@ void Controller::Smash()
 {
 	if (!possessedPawn)
 		return;
-	bool pressedButton = IsKeyDown(KEY_E);
+	bool pressedButton = IsKeyDown(KEY_SPACE);
 	possessedPawn->Smash(pressedButton);
 };
+
+void Controller::GridMovement()
+{
+	if (!possessedPawn)
+		return;
+
+	if (!itemsManager)
+		return;
+
+	possessedPawn->SetPosition({ itemsManager->xPos[desiredGridPosX], possessedPawn->GetPosition().y });
+
+	if (IsKeyPressed(KEY_A))
+	{
+		if (!aKeyOnce)
+		{
+			if (desiredGridPosX > 0)
+			{
+				desiredGridPosX--;
+			}
+			aKeyOnce = true;
+		}
+	}
+	else if (IsKeyReleased(KEY_A))
+	{
+		aKeyOnce = false;
+	}
+
+	if (IsKeyPressed(KEY_D))
+	{
+		if (!dKeyOnce)
+		{
+			if(desiredGridPosX < COLUMNS_AMOUNT - 1)
+				desiredGridPosX++;
+
+			dKeyOnce = true;
+		}
+	}
+	else if (IsKeyReleased(KEY_D))
+	{
+		dKeyOnce = false;
+	}
+
+
+}

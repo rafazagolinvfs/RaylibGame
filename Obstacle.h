@@ -18,12 +18,8 @@ private:
 		sprite = LoadTexture("resources/Obstacle.png");
 		movSpeed = MOV_SPEED;
 	}
-	Obstacle()
-	{
+	Obstacle() {}
 
-	}
-
-	virtual void Update() override;
-	
+	virtual void Update() override;	
 };
 

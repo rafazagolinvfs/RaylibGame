@@ -6,6 +6,6 @@ Things like rows and columns amount, actors size (collision boundaries), distanc
 #define COLUMNS_AMOUNT 5 //Enemy or breakable actors columns amount per row
 #define ROWS_AMOUNT 5
 #define OFFSET_X 1.4f
-#define OFFSET_Y 75.f
-
-
+#define OFFSET_Y 150.f
+#define MOV_SPEED 250.f
+#define INITIAL_Y_POS -800.f

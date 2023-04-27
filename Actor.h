@@ -25,13 +25,19 @@ public:
     
     virtual void Update();
     virtual void Move(Vector2 dir);
+    virtual void SetPosition(Vector2 pos);
     virtual bool Smash(bool isSmashing);
     virtual void Render(Color color);
     virtual void OnOverlap(Actor* collidedActor) {};
     Vector2 GetPosition() const;
+    bool IsNotBelowScreen();
+
+public:
     Texture2D sprite;
-    bool IgnoreCollision = false;
+    bool ignoreCollision = false;
     bool isSmashing = false;
+
+    bool isActive = true; //will determine if the update will run or not
 
     union
     {
@@ -42,14 +48,17 @@ public:
     Level* level;
     UserInterface* ui;
 
+    void ResetPosition(float resetPosition = -SCREEN_Y);
 protected:
     Actor(); //default constructor
     ~Actor(); //default destructor
     Actor(const Actor& actor); //copy constructor
     Actor(Vector2 position, Vector2 size); //custom constructor
+
+
+protected:
     int mUID;
 
-    void ResetPosition(float resetPosition = -SCREEN_Y);
 
 private: 
     void CollisionCheck();

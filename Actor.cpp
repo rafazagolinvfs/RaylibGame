@@ -8,6 +8,7 @@ Actor::Actor()
 	shape.height = 0.f;
 	mUID = 0;
 	movSpeed = 200.f;		
+
 }
 
 Actor::Actor(const Actor& actor)
@@ -15,6 +16,7 @@ Actor::Actor(const Actor& actor)
 	mUID = actor.mUID;
 	shape = actor.shape;
 	movSpeed = 200.f;	
+	
 }
 
 Actor::Actor(Vector2 position, Vector2 size)
@@ -25,6 +27,7 @@ Actor::Actor(Vector2 position, Vector2 size)
 	shape.height = size.y;	
 	mUID = 0;
 	movSpeed = 200.f;	
+
 }
 
 Actor::~Actor()
@@ -34,7 +37,9 @@ Actor::~Actor()
 
 void Actor::Update()
 {
-	Render(RED);
+	if (!isActive)
+		return;
+
 	CollisionCheck();
 }
 
@@ -77,7 +82,7 @@ void Actor::CollisionCheck()
 		{
 			if (item != this)
 			{
-				if (CheckCollisionRecs(this->shape, item->shape) && !IgnoreCollision && !item->IgnoreCollision)
+				if (CheckCollisionRecs(this->shape, item->shape) && !ignoreCollision && !item->ignoreCollision)
 				{
 					(this->*collisionOverlapBind)(item);
 				}
@@ -92,4 +97,16 @@ void Actor::ResetPosition(float resetPosition)
 	{
 		shape.y = resetPosition;
 	}
+}
+
+void Actor::SetPosition(Vector2 pos)
+{
+	shape.x = pos.x;
+	shape.y = pos.y;
+}
+
+bool Actor::IsNotBelowScreen()
+{
+	//If it's below the screen boundaries
+	return GetPosition().y <= SCREEN_Y;
 }

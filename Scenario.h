@@ -15,7 +15,7 @@ class Scenario : public Actor
 private:
 	Scenario(Vector2 position, Vector2 size) : Actor(position, size)
 	{
-		sprite = LoadTexture("resources/EnvironmentBase1.png");
+		sprite = LoadTexture("resources/EnvironmentBase2.png");
 		
 	}
 	Scenario()

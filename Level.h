@@ -9,9 +9,11 @@
 //Forward declaration
 class Actor;
 class Breakable;
+class Obstacle;
 class Player;
 class Controller;
 class UserInterface;
+class ItemsManager;
 
 class Level
 {
@@ -25,11 +27,14 @@ public:
 		return entities;
 	}
 
+	static std::array<Breakable*, COLUMNS_AMOUNT* ROWS_AMOUNT> breakables;
+	static std::array<Obstacle*, COLUMNS_AMOUNT * ROWS_AMOUNT> obstacles;
+	ItemsManager* itemsManager;
+	
+
 private:
 	std::vector<Actor*> entities;
 	std::vector<Actor*> actorsForThePlayerActorToCollideWith;
-	std::array<Actor*, COLUMNS_AMOUNT> breakables;
-	std::array<Actor*, COLUMNS_AMOUNT * ROWS_AMOUNT> enemies;
 	Player* player;
 
 	UserInterface* ui;

@@ -6,6 +6,6 @@ void Obstacle::Update()
 
 	Move({ 0.f, 1.f });
 
-	ResetPosition(0);
+	//ResetPosition(INITIAL_Y_POS);
 }
 

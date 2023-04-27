@@ -1,17 +1,26 @@
 #include "ItemsManager.h"
 #include "Scenario.h"
-#include <random>
-#include "GameplayParams.h"
-
+#include "Obstacle.h"
+#include "Breakable.h"
+#include "Random.h"
+#include "Level.h"
 
 
 ItemsManager::ItemsManager()
 {
+	randMin = 1;
+	randMax = 3;
 	initialPosX = 0;
+	rowsAmount = 1;
 	for (int i = 0; i < COLUMNS_AMOUNT * ROWS_AMOUNT; ++i)
 	{
 		const std::pair<Vector2, bool> hello;
 		columnPosition.push_back(hello);
+	}
+	for (int i = 0; i < COLUMNS_AMOUNT * ROWS_AMOUNT; ++i)
+	{
+		const std::pair<Actor*, int> hello;
+		placedActors.push_back(hello);
 	}
 }
 
@@ -27,10 +36,12 @@ void ItemsManager::RegisterPositions()
 	array...
 	
 	Also the reason why we have a separate 'RegisterPositions' method for registering actors positions is because
-	we get the size of the scenario from the Scenario class to have a parameter for the initial position...*/
+	we get the size of the scenario from the Scenario class to have a parameter for the initial position...
 	
-	//Save x coordinates
-	float xPos[COLUMNS_AMOUNT];
+	Oh yes, this is just laying out the 'grid' for us to use later. It is not placing any actor.
+	*/
+	
+	//Save x coordinates	
 	for (int i = 0; i < COLUMNS_AMOUNT; i++)
 	{
 		xPos[i] = initialPosX + i * ACTOR_SIZE_X * OFFSET_X;
@@ -50,28 +61,51 @@ void ItemsManager::RegisterPositions()
 			index = j % COLUMNS_AMOUNT; 
 
 			//This will offset the actors y position everytime we get into a new row
-			float posY = OFFSET_Y + i * OFFSET_Y; 
+			float posY = INITIAL_Y_POS + i * OFFSET_Y;
 			columnPosition[j].first = Vector2{ xPos[index], posY};
 			columnPosition[j].second = false;
 		}
 	}
 }
 
-void ItemsManager::PlaceActor(int spot, Actor* actor)
+void ItemsManager::PlaceActors()
 {
-	if (spot > columnPosition.size())
-		return;
+	//We can figure it out later 
+	//int desiredRow = 1; // row 1 == index of row is 0 to 4, row 2 == index of row is 5 to 9
 
-	if (!columnPosition[spot].second)
+
+
+	/*TODO: Finish implementing this method. Start with one row first then move to the others 
+		with the necessary checks
+	*/
+	//let's assume for now that we some spot in row 1, so we set the correct range (0 to 4)
+	int randomPosition = Random<int>::RandomRange(0, 4);
+
+	
+
+	//If the spot it's occupied, return.
+	if (columnPosition[randomPosition].second)
+	{
+		LOG("Attempt to place actor " << " position is ocuppied " << randomPosition);
 		return;
+	}
+
+	Actor* actor = GetAvailableObstacle();
 
 	if (!actor)
 		return;
+	
+	GetAvailableObstacle()->SetPosition({ columnPosition[randomPosition].first });
+	columnPosition[randomPosition].second = true;
+	placedActors[0].first = actor;
+	placedActors[0].second = randomPosition;
 
 
+
+	LOG("PlaceActors..." << " random number = " << randomPosition);
+	LOG("placedActors[0].second: " << placedActors[0].second);
 
 }
-
 
 void ItemsManager::Update()
 {
@@ -81,5 +115,36 @@ void ItemsManager::Update()
 
 void ItemsManager::ManageItems()
 {
+	if (placedActors.size() > 0)
+	{
+		for (auto itr : placedActors)
+		{
+			if (itr.first)
+			{
+				//That means some actor is still going down on screen. Yes, I need to rename CanPool method for a more
+				//suitable name
+				if (itr.first->IsNotBelowScreen())
+					return;
 
+				if (!itr.first->IsNotBelowScreen())
+				{
+					columnPosition[itr.second].second = false;
+					itr.first->ResetPosition();
+				}
+
+			}				
+		}
+	}
+
+	PlaceActors();
+}
+
+Obstacle* ItemsManager::GetAvailableObstacle()
+{
+	for (auto itr : Level::obstacles)
+	{
+		if (itr->IsNotBelowScreen())
+			return itr;
+	}
+	return nullptr;
 }

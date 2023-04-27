@@ -12,7 +12,7 @@ class Player : public Actor
 	friend class FactoryActor;
 
 public:
-	
+	bool debugTrick = false;
 private:
 	Player(Vector2 position, Vector2 size) : Actor(position, size)
 	{
@@ -24,5 +24,6 @@ private:
 	
 	virtual void Move(Vector2 dir) override;
 	virtual void OnOverlap(Actor* collidedActor) override;
+
 };
 
