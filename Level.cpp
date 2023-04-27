@@ -126,7 +126,7 @@ Level::Level()
 	}
 
 	if (itemsManager)
-		itemsManager->PlaceActors();
+		itemsManager->PlaceActorsOnGrid();
 }
 
 Level::~Level()

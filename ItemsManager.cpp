@@ -68,7 +68,7 @@ void ItemsManager::RegisterPositions()
 	}
 }
 
-void ItemsManager::PlaceActors()
+void ItemsManager::PlaceActorsOnGrid()
 {
 	//We can figure it out later 
 	//int desiredRow = 1; // row 1 == index of row is 0 to 4, row 2 == index of row is 5 to 9
@@ -102,7 +102,7 @@ void ItemsManager::PlaceActors()
 
 
 
-	LOG("PlaceActors..." << " random number = " << randomPosition);
+	LOG("PlaceActorsOnGrid..." << " random number = " << randomPosition);
 	LOG("placedActors[0].second: " << placedActors[0].second);
 
 }
@@ -115,28 +115,28 @@ void ItemsManager::Update()
 
 void ItemsManager::ManageItems()
 {
-	if (placedActors.size() > 0)
+	/// <summary>
+	/// The idea is to constantly check if all actors that were placed at this "round" are gone (Below of screen). 
+	/// If they are gone, that means we can start another round (PlaceActors()).
+	/// </summary>
+	for (auto itr : placedActors)
 	{
-		for (auto itr : placedActors)
+		if (itr.first)
 		{
-			if (itr.first)
+			//That means some actor is not below screen boundaries				
+			if (itr.first->IsNotBelowScreen())
+				return;
+
+			if (!itr.first->IsNotBelowScreen())
 			{
-				//That means some actor is still going down on screen. Yes, I need to rename CanPool method for a more
-				//suitable name
-				if (itr.first->IsNotBelowScreen())
-					return;
+				columnPosition[itr.second].second = false;
+				itr.first->ResetPosition();
+			}
 
-				if (!itr.first->IsNotBelowScreen())
-				{
-					columnPosition[itr.second].second = false;
-					itr.first->ResetPosition();
-				}
-
-			}				
 		}
 	}
 
-	PlaceActors();
+	PlaceActorsOnGrid();
 }
 
 Obstacle* ItemsManager::GetAvailableObstacle()

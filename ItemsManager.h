@@ -16,7 +16,7 @@ public:
 	ItemsManager();
 	~ItemsManager();
 	void RegisterPositions();
-	void PlaceActors();
+	void PlaceActorsOnGrid();
 	void Update();
 
 public:
