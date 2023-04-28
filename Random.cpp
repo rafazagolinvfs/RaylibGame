@@ -21,3 +21,9 @@ T Random<T>::RandomRange(T min, T max)
 }
 
 
+template <class T>
+std::vector<T> Random<T>::ListNonRepetitiveNumbers(T amount, T min, T max)
+{
+	//To be implemented
+	return std::vector<T>();
+}

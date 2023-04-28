@@ -37,5 +37,7 @@ private:
 	int randMin;
 	int randMax;
 	std::vector<std::pair<Actor*, int>> placedActors;
+
+	int actorsAmount = 0;
 };
 

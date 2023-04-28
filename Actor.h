@@ -36,8 +36,8 @@ public:
     Texture2D sprite;
     bool ignoreCollision = false;
     bool isSmashing = false;
-
-    bool isActive = true; //will determine if the update will run or not
+    bool isActive = true; //will determine if the default update will run or not (collision check)
+    bool isPlaced = false;
 
     union
     {

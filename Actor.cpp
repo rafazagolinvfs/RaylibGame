@@ -108,5 +108,5 @@ void Actor::SetPosition(Vector2 pos)
 bool Actor::IsNotBelowScreen()
 {
 	//If it's below the screen boundaries
-	return GetPosition().y <= SCREEN_Y;
+	return GetPosition().y < SCREEN_Y;
 }
