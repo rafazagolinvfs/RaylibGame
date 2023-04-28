@@ -12,8 +12,8 @@
 #include "Utils.h"
 
 //int FactoryActor<int>::sUniqueIDCounter = 0;
-std::array<Obstacle*, COLUMNS_AMOUNT* ROWS_AMOUNT> Level::obstacles;
-std::array<Breakable*, COLUMNS_AMOUNT* ROWS_AMOUNT> Level::breakables;
+std::array<Obstacle*, ACTORS_AMOUNT> Level::obstacles;
+std::array<Breakable*, ACTORS_AMOUNT> Level::breakables;
 
 
 Level::Level()
@@ -147,13 +147,12 @@ void Level::Update()
 			//TODO: Render menu screen, process input
 			if (ui)
 			{
-				DrawTexture(ui->menuScreen, SCREEN_X / 2 - ui->menuScreen.width /2, 0, WHITE);
+				ui->DrawMenuUIScreen();
 			}
 		}
 			break;
 
 		case EScreen::Game: {
-
 			//Tell every registered actor to update and render itself
 			for (int i = 0; i < entities.size(); ++i)
 			{
@@ -165,7 +164,11 @@ void Level::Update()
 				if (itemsManager)
 					itemsManager->Update();
 			}
-			ui->OutputScore();
+
+			if (ui)
+			{
+				ui->DrawGameUIScreen();	
+			}
 		}
 			break;
 
@@ -173,7 +176,7 @@ void Level::Update()
 			//TODO: Render game over screen, process input
 			if (ui)
 			{
-				DrawTexture(ui->gameOverScreen, 0, 0, WHITE);
+				ui->DrawGameOverUIScreen();
 			}
 		}
 			break;

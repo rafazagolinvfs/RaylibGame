@@ -85,7 +85,7 @@ void ItemsManager::PlaceActorsOnGrid()
 		//If the spot it's occupied, return.
 		if (!columnPosition[randomPosition].second)
 		{
-			LOG("Attempt to place actor " << " position is ocuppied " << randomPosition);
+			//LOG("Attempt to place actor " << " position is ocuppied " << randomPosition);
 
 
 			Actor* actor = GetAvailableObstacle();
@@ -110,14 +110,6 @@ void ItemsManager::PlaceActorsOnGrid()
 void ItemsManager::Update()
 {
 	ManageItems();
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	if (placedActors[i].first)
-	//	{
-	//		LOG(placedActors[i].first << " position " << placedActors[i].second);
-	//	}
-	//}
-
 }
 
 

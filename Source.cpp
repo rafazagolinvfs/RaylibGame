@@ -6,8 +6,15 @@
 int main()
 {
     InitWindow(SCREEN_X, SCREEN_Y, WINDOW_TITLE);
+    InitAudioDevice();      // Initialize audio device
+
     
     Level* level = new Level();
+
+    /*Example of loading and playing a sound*/
+    /*Sound s = LoadSound("resources/sound/arcade.wav");
+    PlaySound(s);*/
+
 
     // Main game loop
     while (!WindowShouldClose())

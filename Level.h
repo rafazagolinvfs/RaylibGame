@@ -27,8 +27,8 @@ public:
 		return entities;
 	}
 
-	static std::array<Breakable*, COLUMNS_AMOUNT* ROWS_AMOUNT> breakables;
-	static std::array<Obstacle*, COLUMNS_AMOUNT * ROWS_AMOUNT> obstacles;
+	static std::array<Breakable*, ACTORS_AMOUNT> breakables;
+	static std::array<Obstacle*, ACTORS_AMOUNT> obstacles;
 	ItemsManager* itemsManager;
 	
 
