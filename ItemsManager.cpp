@@ -57,7 +57,7 @@ void ItemsManager::RegisterPositions()
 			//float posX = initialPosX + j * ACTOR_SIZE_X * 1.4f;
 			int index = 0;
 
-			//This will pretty (reset) the index that we want, no matter how far we are in our loop
+			//This will it (reset) to the index that we want, no matter how far we are in our loop
 			index = j % COLUMNS_AMOUNT;
 
 			//This will offset the actors y position everytime we get into a new row
@@ -70,6 +70,7 @@ void ItemsManager::RegisterPositions()
 
 void ItemsManager::PlaceActorsOnGrid()
 {
+	int itr = 0;
 	while (actorsAmount < 3)
 	{
 		//We can figure it out later 
@@ -82,7 +83,7 @@ void ItemsManager::PlaceActorsOnGrid()
 		//let's assume for now that we some spot in row 1, so we set the correct range (0 to 4)
 		int randomPosition = Random<int>::RandomRange(0, 4);
 
-		//If the spot it's occupied, return.
+		//Check If the spot it's not occupied
 		if (!columnPosition[randomPosition].second)
 		{
 			//LOG("Attempt to place actor " << " position is ocuppied " << randomPosition);
@@ -101,6 +102,7 @@ void ItemsManager::PlaceActorsOnGrid()
 
 				//LOG("placedActors[" << actorsAmount << "].second:" << placedActors[actorsAmount].second);
 				//LOG("PlaceActorsOnGrid..." << " random number = " << randomPosition);
+				//itr++;
 				actorsAmount++;
 			}
 		}
@@ -138,7 +140,10 @@ void ItemsManager::ManageItems()
 		}
 	}
 
+	//hacky way to make some randomness for our game
+	//actorsAmount = Random<int>::RandomRange(2,3);
 	actorsAmount = 0;
+
 	PlaceActorsOnGrid();
 }
 

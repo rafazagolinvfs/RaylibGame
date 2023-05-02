@@ -38,6 +38,6 @@ private:
 	int randMax;
 	std::vector<std::pair<Actor*, int>> placedActors;
 
-	int actorsAmount = 0;
+	int actorsAmount = 3;
 };
 

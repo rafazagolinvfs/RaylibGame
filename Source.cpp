@@ -6,9 +6,8 @@
 int main()
 {
     InitWindow(SCREEN_X, SCREEN_Y, WINDOW_TITLE);
-    InitAudioDevice();      // Initialize audio device
+    InitAudioDevice(); // Initialize audio device
 
-    
     Level* level = new Level();
 
     /*Example of loading and playing a sound*/
