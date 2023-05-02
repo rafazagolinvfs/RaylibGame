@@ -31,6 +31,7 @@ private:
 	void ManageItems();
 	Obstacle* GetAvailableObstacle();
 	Breakable* GetAvailableBreakable();
+	void PlaceSeats();
 
 
 private:
@@ -38,6 +39,7 @@ private:
 	int randMax;
 	std::vector<std::pair<Actor*, int>> placedActors;
 
-	int actorsAmount = 3;
+	int actorsAmount;
+	std::vector<int> seats;
 };
 

@@ -7,7 +7,7 @@ Things like rows and columns amount, actors size (collision boundaries), distanc
 #define ROWS_AMOUNT 5
 #define OFFSET_X 1.4f
 #define OFFSET_Y 150.f
-#define MOV_SPEED 250.f
+#define MOV_SPEED 350.f
 #define INITIAL_Y_POS -800.f
 
 /*this will determine how many actors(obstacles or breakables) we will have available to poll from the list

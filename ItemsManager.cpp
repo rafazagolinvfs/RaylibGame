@@ -22,8 +22,9 @@ ItemsManager::ItemsManager()
 		const std::pair<Actor*, int> hello;
 		placedActors.push_back(hello);
 	}
-}
 
+	actorsAmount = Random<int>::RandomRange(1, 2);
+}
 
 ItemsManager::~ItemsManager()
 {
@@ -71,7 +72,9 @@ void ItemsManager::RegisterPositions()
 void ItemsManager::PlaceActorsOnGrid()
 {
 	int itr = 0;
-	while (actorsAmount < 3)
+	PlaceSeats();
+	
+	while (itr < actorsAmount)
 	{
 		//We can figure it out later 
 		//int desiredRow = 1; // row 1 == index of row is 0 to 4, row 2 == index of row is 5 to 9
@@ -81,10 +84,11 @@ void ItemsManager::PlaceActorsOnGrid()
 			with the necessary checks
 		*/
 		//let's assume for now that we some spot in row 1, so we set the correct range (0 to 4)
-		int randomPosition = Random<int>::RandomRange(0, 4);
+		int indexToRemove = Random<int>::RandomRange(1, seats.size());
+		int chosenSeat = seats[indexToRemove - 1];
 
 		//Check If the spot it's not occupied
-		if (!columnPosition[randomPosition].second)
+		if (!columnPosition[chosenSeat].second)
 		{
 			//LOG("Attempt to place actor " << " position is ocuppied " << randomPosition);
 
@@ -93,17 +97,21 @@ void ItemsManager::PlaceActorsOnGrid()
 
 			if (actor)
 			{
-				actor->SetPosition({ columnPosition[randomPosition].first });
+				actor->SetPosition({ columnPosition[chosenSeat].first });
 				actor->isPlaced = true;
-				columnPosition[randomPosition].second = true;
+				columnPosition[chosenSeat].second = true;
 				placedActors[actorsAmount].first = actor;
-				placedActors[actorsAmount].second = randomPosition;
+				placedActors[actorsAmount].second = chosenSeat;
+				if (indexToRemove - 1 < seats.size())
+				{
+					seats.erase(seats.begin() + indexToRemove - 1);
+				}
 
 
 				//LOG("placedActors[" << actorsAmount << "].second:" << placedActors[actorsAmount].second);
 				//LOG("PlaceActorsOnGrid..." << " random number = " << randomPosition);
 				//itr++;
-				actorsAmount++;
+				itr++;
 			}
 		}
 	}
@@ -125,13 +133,6 @@ void ItemsManager::ManageItems()
 	{
 		if (itr.first)
 		{
-			//That means some actor is not below screen boundaries				
-			if (itr.first->IsNotBelowScreen())
-			{
-				//LOG("Cannot reset position!");
-				return;
-			}
-
 			if (!itr.first->IsNotBelowScreen())
 			{
 				columnPosition[itr.second].second = false;
@@ -140,9 +141,21 @@ void ItemsManager::ManageItems()
 		}
 	}
 
+	for (auto itr : placedActors)
+	{
+		if (itr.first)
+		{
+			//That means some actor is not below screen boundaries				
+			if (itr.first->IsNotBelowScreen())
+			{
+				//LOG("Cannot reset position!");
+				return;
+			}
+		}
+	}
+
 	//hacky way to make some randomness for our game
-	//actorsAmount = Random<int>::RandomRange(2,3);
-	actorsAmount = 0;
+	actorsAmount = Random<int>::RandomRange(2,3);
 
 	PlaceActorsOnGrid();
 }
@@ -155,4 +168,14 @@ Obstacle* ItemsManager::GetAvailableObstacle()
 			return itr;
 	}
 	return nullptr;
+}
+
+void ItemsManager::PlaceSeats()
+{
+	seats.clear();
+
+	seats.push_back(0);
+	seats.push_back(1);
+	seats.push_back(2);
+	seats.push_back(3);
 }
