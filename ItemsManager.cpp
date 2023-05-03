@@ -17,13 +17,13 @@ ItemsManager::ItemsManager()
 		const std::pair<Vector2, bool> hello;
 		columnPosition.push_back(hello);
 	}
-	for (int i = 0; i < COLUMNS_AMOUNT * ROWS_AMOUNT; ++i)
+	for (int i = 0; i <  ACTORS_AMOUNT; ++i)
 	{
 		const std::pair<Actor*, int> hello;
 		placedActors.push_back(hello);
 	}
 
-	actorsAmount = Random<int>::RandomRange(1, 2);
+	RandomActors(1, 20);
 }
 
 ItemsManager::~ItemsManager()
@@ -61,7 +61,7 @@ void ItemsManager::RegisterPositions()
 			//This will it (reset) to the index that we want, no matter how far we are in our loop
 			index = j % COLUMNS_AMOUNT;
 
-			//This will offset the actors y position everytime we get into a new row
+			//This will offset the actors y position every time we get into a new row
 			float posY = INITIAL_Y_POS + i * OFFSET_Y;
 			columnPosition[j].first = Vector2{ xPos[index], posY };
 			columnPosition[j].second = false;
@@ -72,17 +72,22 @@ void ItemsManager::RegisterPositions()
 void ItemsManager::PlaceActorsOnGrid()
 {
 	int itr = 0;
+	int rowController = 0;
+	LOG("Actors amount: " << actorsAmount);
 	PlaceSeats();
 	
+	/*This will work for one row only. 
+	TODO: Make it work with multiple rows. Prob we will have to have one more while loop (nested while loops)*/
 	while (itr < actorsAmount)
 	{
 		//We can figure it out later 
 		//int desiredRow = 1; // row 1 == index of row is 0 to 4, row 2 == index of row is 5 to 9
+		if ((itr + 1) % COLUMNS_AMOUNT == 0)
+		{
+			rowController++;
+			LOG("row controller: " << rowController);
+		}
 
-
-		/*TODO: Finish implementing this method. Start with one row first then move to the others
-			with the necessary checks
-		*/
 		//let's assume for now that we some spot in row 1, so we set the correct range (0 to 4)
 		int indexToRemove = Random<int>::RandomRange(1, seats.size());
 		int chosenSeat = seats[indexToRemove - 1];
@@ -91,8 +96,6 @@ void ItemsManager::PlaceActorsOnGrid()
 		if (!columnPosition[chosenSeat].second)
 		{
 			//LOG("Attempt to place actor " << " position is ocuppied " << randomPosition);
-
-
 			Actor* actor = GetAvailableObstacle();
 
 			if (actor)
@@ -100,17 +103,15 @@ void ItemsManager::PlaceActorsOnGrid()
 				actor->SetPosition({ columnPosition[chosenSeat].first });
 				actor->isPlaced = true;
 				columnPosition[chosenSeat].second = true;
-				placedActors[actorsAmount].first = actor;
-				placedActors[actorsAmount].second = chosenSeat;
+				placedActors[chosenSeat].first = actor;
+				placedActors[chosenSeat].second = chosenSeat;
 				if (indexToRemove - 1 < seats.size())
 				{
 					seats.erase(seats.begin() + indexToRemove - 1);
 				}
 
-
 				//LOG("placedActors[" << actorsAmount << "].second:" << placedActors[actorsAmount].second);
-				//LOG("PlaceActorsOnGrid..." << " random number = " << randomPosition);
-				//itr++;
+				//LOG("PlaceActorsOnGrid..." << " random number = " << randomPosition);				
 				itr++;
 			}
 		}
@@ -122,40 +123,39 @@ void ItemsManager::Update()
 	ManageItems();
 }
 
-
 void ItemsManager::ManageItems()
 {
 	/// <summary>
 	/// The idea is to constantly check if all actors that were placed at this "round" are gone (Below of screen). 
 	/// If they are gone, that means we can start another round (PlaceActors()).
 	/// </summary>
-	for (auto itr : placedActors)
+	for (auto& itr : placedActors)
 	{
 		if (itr.first)
 		{
-			if (!itr.first->IsNotBelowScreen())
-			{
-				columnPosition[itr.second].second = false;
-				itr.first->isPlaced = false;
-			}
-		}
-	}
-
-	for (auto itr : placedActors)
-	{
-		if (itr.first)
-		{
-			//That means some actor is not below screen boundaries				
 			if (itr.first->IsNotBelowScreen())
 			{
-				//LOG("Cannot reset position!");
 				return;
 			}
 		}
 	}
 
-	//hacky way to make some randomness for our game
-	actorsAmount = Random<int>::RandomRange(2,3);
+	// LOG("All actors reached the bottom");
+	 
+	// hacky way to make some randomness for our game
+	RandomActors(1, 20);
+
+
+	//Resetting things
+	for (auto& itr : placedActors)
+	{
+		if (itr.first)
+		{
+			columnPosition[itr.second].second = false;
+			itr.first->isPlaced = false;
+			itr.first = NULL;
+		}
+	}
 
 	PlaceActorsOnGrid();
 }
@@ -173,9 +173,13 @@ Obstacle* ItemsManager::GetAvailableObstacle()
 void ItemsManager::PlaceSeats()
 {
 	seats.clear();
+	for (int i = 0; i < ACTORS_AMOUNT; i++)
+	{
+		seats.push_back(i);
+	}
+}
 
-	seats.push_back(0);
-	seats.push_back(1);
-	seats.push_back(2);
-	seats.push_back(3);
+void ItemsManager::RandomActors(int min, int max)
+{
+	actorsAmount = Random<int>::RandomRange(min, max);
 }

@@ -32,6 +32,7 @@ private:
 	Obstacle* GetAvailableObstacle();
 	Breakable* GetAvailableBreakable();
 	void PlaceSeats();
+	void RandomActors(int min, int max);
 
 
 private:
