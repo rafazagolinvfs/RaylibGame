@@ -33,7 +33,8 @@ private:
 	Breakable* GetAvailableBreakable();
 	void PlaceSeats();
 	void RandomActors(int min, int max);
-
+	void RowCheck();
+	
 
 private:
 	int randMin;

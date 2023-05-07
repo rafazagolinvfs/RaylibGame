@@ -17,7 +17,7 @@ ItemsManager::ItemsManager()
 		const std::pair<Vector2, bool> hello;
 		columnPosition.push_back(hello);
 	}
-	for (int i = 0; i <  ACTORS_AMOUNT; ++i)
+	for (int i = 0; i < ACTORS_AMOUNT; ++i)
 	{
 		const std::pair<Actor*, int> hello;
 		placedActors.push_back(hello);
@@ -69,52 +69,114 @@ void ItemsManager::RegisterPositions()
 	}
 }
 
+void ItemsManager::RowCheck()
+{
+
+}
+
 void ItemsManager::PlaceActorsOnGrid()
 {
-	int itr = 0;
-	int rowController = 0;
-	LOG("Actors amount: " << actorsAmount);
+	int placedRowsN = 0; // keeps track of placed rows amount
+	const int rowsAmount = Random<int>::RandomRange(1, 3);
 	PlaceSeats();
-	
-	/*This will work for one row only. 
+
+	/*This will work for one row only.
 	TODO: Make it work with multiple rows. Prob we will have to have one more while loop (nested while loops)*/
-	while (itr < actorsAmount)
+	while (placedRowsN < rowsAmount)
 	{
-		//We can figure it out later 
-		//int desiredRow = 1; // row 1 == index of row is 0 to 4, row 2 == index of row is 5 to 9
-		if ((itr + 1) % COLUMNS_AMOUNT == 0)
+
+		// Place actors on the grid based on the desired row amount
+
+		int desiredWindowsAmount = Random<int>::RandomRange(1, 4);		
+
+
+		//	while (columnController < COLUMNS_AMOUNT)
+		//	{
+				// Check If the spot it's not occupied
+				//if (!columnPosition[chosenSeat].second)
+				//{
+				//	Actor* actor = GetAvailableObstacle();
+				//	if (actor)
+				//	{
+				//		actor->SetPosition({ columnPosition[chosenSeat].first });
+				//		actor->isPlaced = true;
+				//		columnPosition[chosenSeat].second = true;
+				//		placedActors[chosenSeat].first = actor;
+				//		placedActors[chosenSeat].second = chosenSeat;
+				//		if (indexToRemove - 1 < seats.size())
+				//			seats.erase(seats.begin() + indexToRemove - 1);
+				//	}
+				//}
+		//	}
+
+
+		//Place breakables
+		while (desiredWindowsAmount > 0)
 		{
-			rowController++;
-			LOG("row controller: " << rowController);
-		}
 
-		//let's assume for now that we some spot in row 1, so we set the correct range (0 to 4)
-		int indexToRemove = Random<int>::RandomRange(1, seats.size());
-		int chosenSeat = seats[indexToRemove - 1];
+			int indexToRemove = Random<int>::RandomRange(placedRowsN, placedRowsN + (COLUMNS_AMOUNT - 1));
+			int chosenSeat = seats[indexToRemove];
 
-		//Check If the spot it's not occupied
-		if (!columnPosition[chosenSeat].second)
-		{
-			//LOG("Attempt to place actor " << " position is ocuppied " << randomPosition);
-			Actor* actor = GetAvailableObstacle();
-
-			if (actor)
+			if (!columnPosition[chosenSeat].second)
 			{
-				actor->SetPosition({ columnPosition[chosenSeat].first });
-				actor->isPlaced = true;
-				columnPosition[chosenSeat].second = true;
-				placedActors[chosenSeat].first = actor;
-				placedActors[chosenSeat].second = chosenSeat;
-				if (indexToRemove - 1 < seats.size())
+				Actor* actor = GetAvailableBreakable();
+				if (actor)
 				{
-					seats.erase(seats.begin() + indexToRemove - 1);
-				}
+					actor->SetPosition({ columnPosition[chosenSeat].first });
+					actor->isPlaced = true;
+					columnPosition[chosenSeat].second = true;
+					placedActors[chosenSeat].first = actor;
+					placedActors[chosenSeat].second = chosenSeat;
 
-				//LOG("placedActors[" << actorsAmount << "].second:" << placedActors[actorsAmount].second);
-				//LOG("PlaceActorsOnGrid..." << " random number = " << randomPosition);				
-				itr++;
+					if (indexToRemove - 1 < seats.size())
+						seats.erase(seats.begin() + indexToRemove - 1);
+
+				}
 			}
+
+			if(placedRowsN > 0)
+			{
+				// check either if it's empty or placed with a breakable
+				// the reason why we minus 5 is to get the row above at exact on the same column
+				Actor* actor = placedActors[chosenSeat - 5].first;				
+				if (Breakable* br = dynamic_cast<Breakable*>(actor))
+				{
+				}
+				else if(!actor) // that means there is no actor there
+				{
+				}
+			}
+
+			desiredWindowsAmount--;
 		}
+
+		//Place obstacles
+		placedRowsN++;
+
+#pragma region Old Way
+		//int indexToRemove = Random<int>::RandomRange(1, seats.size());
+		//int chosenSeat = seats[indexToRemove - 1];
+
+		//// Check If the spot it's not occupied
+		//if (!columnPosition[chosenSeat].second)
+		//{
+		//	Actor* actor = GetAvailableObstacle();
+
+		//	if (actor)
+		//	{
+		//		actor->SetPosition({ columnPosition[chosenSeat].first });
+		//		actor->isPlaced = true;
+		//		columnPosition[chosenSeat].second = true;
+		//		placedActors[chosenSeat].first = actor;
+		//		placedActors[chosenSeat].second = chosenSeat;
+
+		//		if (indexToRemove - 1 < seats.size())				
+		//			seats.erase(seats.begin() + indexToRemove - 1);
+		//		
+		//		itr++;
+		//	}
+		//}
+#pragma endregion
 	}
 }
 
@@ -141,7 +203,7 @@ void ItemsManager::ManageItems()
 	}
 
 	// LOG("All actors reached the bottom");
-	 
+
 	// hacky way to make some randomness for our game
 	RandomActors(1, 20);
 
@@ -170,9 +232,22 @@ Obstacle* ItemsManager::GetAvailableObstacle()
 	return nullptr;
 }
 
+Breakable* ItemsManager::GetAvailableBreakable()
+{
+	for (auto itr : Level::breakables)
+	{
+		if (!itr->isPlaced)
+			return itr;
+	}
+	return nullptr;
+}
+
 void ItemsManager::PlaceSeats()
 {
-	seats.clear();
+	if (seats.size() > 0)
+		seats.clear();
+
+
 	for (int i = 0; i < ACTORS_AMOUNT; i++)
 	{
 		seats.push_back(i);
